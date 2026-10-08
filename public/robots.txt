@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kennisbank-wbda2016.nl/sitemap.xml

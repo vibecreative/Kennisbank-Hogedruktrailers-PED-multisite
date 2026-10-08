@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-slate-navy: #1E293B;
+  --color-warm-gold: #D97706;
+  --color-tech-blue: #0284C7;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Kennisbank Drukapparatuur & WBDA 2016",
+  "description": "Kennisplatform over de wettelijke kaders, PED Categorie IV keuringsplicht, 2-liter grens en TCO van hogedruktrailers in de Benelux en Europa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
