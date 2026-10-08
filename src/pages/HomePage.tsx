@@ -40,11 +40,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-slate-900 text-white pt-16 pb-20 lg:pt-24 lg:pb-28">
         {/* Background decorative atmosphere */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/80 to-slate-900/70 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/70 to-slate-900/60 z-10" />
         <img
           src={heroImage}
           alt={isEurope ? "Professional high-pressure trailer cleaning building facade with hot water steam" : "Professionele hogedruktrailer in actie bij heetwater gevelreiniging"}
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-40 mix-blend-luminosity"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-50 mix-blend-luminosity"
           referrerPolicy="no-referrer"
         />
 
