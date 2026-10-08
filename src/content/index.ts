@@ -65,6 +65,9 @@ export function getDefaultSiteTarget(): SiteTarget {
         host.includes('-eu-') ||
         host.includes('ped-compliance-hub') ||
         host.includes('ped-kennisbank-platform-eu') ||
+        host.includes('ped-mul-two') ||
+        host.includes('-two.vercel.app') ||
+        host.includes('-two') ||
         host.endsWith('.eu')
       ) {
         return 'europe';
@@ -74,6 +77,7 @@ export function getDefaultSiteTarget(): SiteTarget {
         host.includes('benelux') ||
         host.includes('wbda') ||
         host.includes('ped-kennisbank-platform') ||
+        host.includes('ped-mul.') ||
         host.endsWith('.nl') ||
         host.endsWith('.be')
       ) {

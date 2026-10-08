@@ -11,19 +11,20 @@ export const DevSwitcher: React.FC = () => {
   const host = window.location.hostname.toLowerCase();
   const search = window.location.search;
 
-  // Never show in production domains
+  // Never show on custom production domains or deployed Vercel domains
   if (
     host.includes('hogedruktrailerkeuren') ||
-    host.includes('high-pressure-steam-inspection')
+    host.includes('high-pressure-steam-inspection') ||
+    host.includes('kennisbank-hogedruktrailers')
   ) {
     return null;
   }
 
+  // Only display in local development / AI Studio preview or when explicitly requested via URL param
   const isDevOrPreview =
     host === 'localhost' ||
     host === '127.0.0.1' ||
     host.includes('run.app') ||
-    host.includes('vercel.app') ||
     host.includes('ais-dev') ||
     host.includes('ais-pre') ||
     search.includes('dev=true') ||
