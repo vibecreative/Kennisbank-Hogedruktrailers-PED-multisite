@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kennisbank-wbda2016.nl/sitemap.xml
+Sitemap: https://hogedruktrailerkeuren.nl/sitemap.xml
+Sitemap: https://high-pressure-steam-inspection.eu/sitemap.xml

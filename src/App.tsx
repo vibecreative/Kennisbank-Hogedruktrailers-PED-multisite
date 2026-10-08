@@ -124,10 +124,13 @@ export default function App() {
     setMetaTag('property', 'og:description', navItem.seoDescription);
     setMetaTag('property', 'og:url', canonicalUrl);
     setMetaTag('property', 'og:site_name', content.meta.name);
+    setMetaTag('property', 'og:locale', content.meta.language === 'en' ? 'en_GB' : 'nl_NL');
+    setMetaTag('property', 'og:image', `${baseUrl}/images/hero_pressure_equipment_1790257548564.jpg`);
 
     // Twitter card tags
     setMetaTag('name', 'twitter:title', navItem.seoTitle);
     setMetaTag('name', 'twitter:description', navItem.seoDescription);
+    setMetaTag('name', 'twitter:image', `${baseUrl}/images/hero_pressure_equipment_1790257548564.jpg`);
 
     // Canonical link tag
     let canonicalTag = document.querySelector('link[rel="canonical"]');
@@ -158,6 +161,57 @@ export default function App() {
     setAlternateTag('nl', beneluxAltUrl);
     setAlternateTag('en', europeAltUrl);
     setAlternateTag('x-default', europeAltUrl);
+
+    // Dynamic JSON-LD structured data
+    let jsonLdScript = document.getElementById('dynamic-jsonld');
+    if (!jsonLdScript) {
+      jsonLdScript = document.createElement('script');
+      jsonLdScript.id = 'dynamic-jsonld';
+      jsonLdScript.setAttribute('type', 'application/ld+json');
+      document.head.appendChild(jsonLdScript);
+    }
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": `${baseUrl}/#website`,
+          "url": `${baseUrl}/`,
+          "name": content.meta.name,
+          "description": content.meta.tagline,
+          "inLanguage": content.meta.language
+        },
+        {
+          "@type": "WebApplication",
+          "@id": `${baseUrl}/#calculator`,
+          "name": content.meta.id === 'europe' ? "High-Pressure Trailer TCO & Inspection Calculator" : "TCO Keuringskosten Calculator Hogedruktrailers",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "All",
+          "url": `${baseUrl}${content.navItems.find(i => i.id === 'tco-calculator')?.slug || '/tco-keuringskosten-calculator'}`,
+          "description": content.meta.id === 'europe'
+            ? "Calculate statutory inspection costs, pre-commissioning audits, and downtime for high-pressure steam trailers under PED 2014/68/EU."
+            : "Bereken de werkelijke kosten van periodieke herkeuringen, KvI en stilstandsderving bij hogedruktrailers conform WBDA 2016 en PED 2014/68/EU.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": `${baseUrl}/#faq`,
+          "mainEntity": content.faq.map(item => ({
+            "@type": "Question",
+            "name": item.question,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": item.answer
+            }
+          }))
+        }
+      ]
+    };
+    jsonLdScript.textContent = JSON.stringify(structuredData);
 
     // Scroll to top on page change
     window.scrollTo({ top: 0, behavior: 'instant' });

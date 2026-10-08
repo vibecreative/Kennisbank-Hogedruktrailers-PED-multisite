@@ -1,42 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://kennisbank-wbda2016.nl/</loc>
+    <loc>https://hogedruktrailerkeuren.nl/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://hogedruktrailerkeuren.nl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://high-pressure-steam-inspection.eu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://high-pressure-steam-inspection.eu/" />
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://kennisbank-wbda2016.nl/regelgeving-wbda-2016</loc>
+    <loc>https://hogedruktrailerkeuren.nl/regelgeving-wbda-2016</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://hogedruktrailerkeuren.nl/regelgeving-wbda-2016" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://high-pressure-steam-inspection.eu/ped-directive-2014-68-eu" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kennisbank-wbda2016.nl/2-liter-grens-ped</loc>
+    <loc>https://hogedruktrailerkeuren.nl/2-liter-grens-ped</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://hogedruktrailerkeuren.nl/2-liter-grens-ped" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://high-pressure-steam-inspection.eu/2-litre-threshold-ped" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kennisbank-wbda2016.nl/keuringswijzer-verplichtingen</loc>
+    <loc>https://hogedruktrailerkeuren.nl/keuringswijzer-verplichtingen</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://hogedruktrailerkeuren.nl/keuringswijzer-verplichtingen" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://high-pressure-steam-inspection.eu/in-service-inspection-guide" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kennisbank-wbda2016.nl/internationale-wetgeving-drukapparatuur</loc>
+    <loc>https://hogedruktrailerkeuren.nl/internationale-wetgeving-drukapparatuur</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://hogedruktrailerkeuren.nl/internationale-wetgeving-drukapparatuur" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://high-pressure-steam-inspection.eu/eu-member-state-regulations" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kennisbank-wbda2016.nl/tco-keuringskosten-calculator</loc>
+    <loc>https://hogedruktrailerkeuren.nl/tco-keuringskosten-calculator</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://hogedruktrailerkeuren.nl/tco-keuringskosten-calculator" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://high-pressure-steam-inspection.eu/tco-inspection-cost-calculator" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kennisbank-wbda2016.nl/download-keuringschecklist</loc>
+    <loc>https://hogedruktrailerkeuren.nl/download-keuringschecklist</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://hogedruktrailerkeuren.nl/download-keuringschecklist" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://high-pressure-steam-inspection.eu/download-procurement-checklist" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kennisbank-wbda2016.nl/veelgestelde-vragen</loc>
+    <loc>https://hogedruktrailerkeuren.nl/veelgestelde-vragen</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://hogedruktrailerkeuren.nl/veelgestelde-vragen" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://high-pressure-steam-inspection.eu/faq-ped-compliance" />
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

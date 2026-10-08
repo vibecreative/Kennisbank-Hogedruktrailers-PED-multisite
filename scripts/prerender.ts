@@ -222,16 +222,23 @@ async function prerender() {
       console.log(`  🔄 Created alias redirect: ${altItem.slug} -> ${destinationUrl}`);
     }
 
-    // Generate sitemap.xml dynamically for this target
+    // Generate sitemap.xml dynamically for this target with multi-regional hreflang annotations
+    const alternateContentForSitemap = target === 'europe' ? beneluxContent : europeContent;
     const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${content.navItems
   .map((item: { id: string; slug: string }) => {
     const loc = `${baseUrl}${item.slug === '/' ? '' : item.slug}`;
+    const altItem = alternateContentForSitemap.navItems.find((i: { id: string }) => i.id === item.id);
+    const nlUrl = target === 'benelux' ? loc : `${beneluxContent.meta.baseUrl}${altItem?.slug === '/' ? '' : (altItem?.slug || '')}`;
+    const enUrl = target === 'europe' ? loc : `${europeContent.meta.baseUrl}${altItem?.slug === '/' ? '' : (altItem?.slug || '')}`;
     const priority = item.slug === '/' ? '1.0' : item.id === 'wbda-2016' || item.id === 'two-liter-grens' || item.id === 'tco-calculator' ? '0.9' : '0.8';
     const changefreq = item.slug === '/' || item.id === 'faq' ? 'weekly' : 'monthly';
     return `  <url>
     <loc>${loc}</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="${nlUrl}" />
+    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${enUrl}" />
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`;
@@ -240,7 +247,7 @@ ${content.navItems
 </urlset>
 `;
     fs.writeFileSync(path.resolve(distDir, 'sitemap.xml'), sitemapXml, 'utf-8');
-    console.log(`  🗺️  Generated sitemap.xml for ${baseUrl}`);
+    console.log(`  🗺️  Generated sitemap.xml with hreflang alternates for ${baseUrl}`);
 
     // Generate robots.txt dynamically for this target
     const robotsTxt = `User-agent: *
