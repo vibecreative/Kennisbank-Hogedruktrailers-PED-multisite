@@ -60,14 +60,37 @@ export function getDefaultSiteTarget(): SiteTarget {
       host.includes('ais-pre');
 
     if (!isCloudOrLocal) {
+      // 1. Explicit domain matching for primary custom domains
+      if (host.includes('hogedruktrailerkeuren')) {
+        return 'benelux';
+      }
+
+      if (host.includes('high-pressure-steam-inspection')) {
+        return 'europe';
+      }
+
+      // 2. Vercel deployment and secondary preview projects
+      if (
+        host.includes('ped-mul-two') ||
+        host.includes('-two.vercel.app') ||
+        host.includes('-two')
+      ) {
+        return 'europe';
+      }
+
+      if (
+        host.includes('ped-mul.') ||
+        host.includes('ped-mul-')
+      ) {
+        return 'benelux';
+      }
+
+      // 3. Fallback matching on keywords & TLDs
       if (
         host.includes('-eu.') ||
         host.includes('-eu-') ||
         host.includes('ped-compliance-hub') ||
         host.includes('ped-kennisbank-platform-eu') ||
-        host.includes('ped-mul-two') ||
-        host.includes('-two.vercel.app') ||
-        host.includes('-two') ||
         host.endsWith('.eu')
       ) {
         return 'europe';
@@ -77,7 +100,6 @@ export function getDefaultSiteTarget(): SiteTarget {
         host.includes('benelux') ||
         host.includes('wbda') ||
         host.includes('ped-kennisbank-platform') ||
-        host.includes('ped-mul.') ||
         host.endsWith('.nl') ||
         host.endsWith('.be')
       ) {
