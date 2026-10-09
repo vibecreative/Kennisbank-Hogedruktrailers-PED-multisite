@@ -225,14 +225,15 @@ async function prerender() {
     // Generate sitemap.xml dynamically for this target with multi-regional hreflang annotations
     const alternateContentForSitemap = target === 'europe' ? beneluxContent : europeContent;
     const today = new Date().toISOString().split('T')[0];
+    const euBaseUrl = process.env.VITE_EU_SITE_URL || 'https://www.highpressuresteaminspection.eu';
     const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${content.navItems
   .map((item: { id: string; slug: string }) => {
     const loc = `${baseUrl}${item.slug === '/' ? '/' : item.slug}`;
     const altItem = alternateContentForSitemap.navItems.find((i: { id: string }) => i.id === item.id);
     const nlUrl = target === 'benelux' ? loc : `${beneluxContent.meta.baseUrl}${altItem?.slug === '/' ? '/' : (altItem?.slug || '')}`;
-    const euBaseUrl = 'https://kennisbank-hogedruktrailers-ped-mul-two.vercel.app';
     const enUrl = target === 'europe' ? loc : `${euBaseUrl}${altItem?.slug === '/' ? '/' : (altItem?.slug || '')}`;
     const priority = item.slug === '/' ? '1.0' : item.id === 'wbda-2016' || item.id === 'two-liter-grens' || item.id === 'tco-calculator' || item.id === 'keuringsverplichtingen' ? '0.9' : '0.8';
     const changefreq = item.slug === '/' || item.id === 'faq' ? 'weekly' : 'monthly';
