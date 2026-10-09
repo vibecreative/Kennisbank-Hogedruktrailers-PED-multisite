@@ -234,7 +234,9 @@ export default function App() {
     const resolved = findPageByPathOrSlug(targetOrSlug);
     setCurrentPage(resolved.pageId);
     try {
-      window.history.pushState(null, '', resolved.slug);
+      const search = window.location.search || '';
+      const newUrl = `${resolved.slug}${search}`;
+      window.history.pushState(null, '', newUrl);
     } catch {
       // Fallback for sandboxed iframes
       window.location.hash = resolved.slug;

@@ -1,21 +1,27 @@
 import { useState, useEffect } from 'react';
-import { SiteContent, SiteTarget } from './types';
-import { beneluxContent } from './benelux';
+import { SiteContent, SiteTarget, BeneluxLanguage, SiteLanguage } from './types';
+import { beneluxContent, getBeneluxContent, beneluxContentNl, beneluxContentFr, beneluxContentDe } from './benelux';
 import { europeContent } from './europe';
 
 export * from './types';
-export { beneluxContent } from './benelux';
+export { beneluxContent, getBeneluxContent, beneluxContentNl, beneluxContentFr, beneluxContentDe } from './benelux';
 export { europeContent } from './europe';
 
-const SITE_CONTENT_MAP: Record<SiteTarget, SiteContent> = {
-  benelux: beneluxContent,
-  europe: europeContent,
-};
+export const BENELUX_LANGUAGES: Array<{ code: BeneluxLanguage; label: string; flag: string; countryNote: string }> = [
+  { code: 'nl', label: 'Nederlands', flag: '🇳🇱', countryNote: 'NL / BE-Vlaanderen' },
+  { code: 'fr', label: 'Français', flag: '🇫🇷', countryNote: 'BE-Wallonie / Bruxelles / LU' },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪', countryNote: 'Luxemburg / Ostbelgien' },
+];
 
 let serverOverrideTarget: SiteTarget | null = null;
+let serverOverrideLang: BeneluxLanguage | null = null;
 
 export function setServerSiteTarget(target: SiteTarget | null) {
   serverOverrideTarget = target;
+}
+
+export function setServerBeneluxLang(lang: BeneluxLanguage | null) {
+  serverOverrideLang = lang;
 }
 
 export function getDefaultSiteTarget(): SiteTarget {
@@ -27,7 +33,7 @@ export function getDefaultSiteTarget(): SiteTarget {
   if (typeof window !== 'undefined' && window.location) {
     const host = window.location.hostname.toLowerCase();
 
-    // A. Query param override (?site=europe, ?site=benelux, ?lang=en, ?lang=nl)
+    // A. Query param override (?site=europe, ?site=benelux, ?lang=en, ?lang=nl, ?lang=fr, ?lang=de)
     try {
       const params = new URLSearchParams(window.location.search);
       const querySite = params.get('site')?.toLowerCase();
@@ -36,12 +42,12 @@ export function getDefaultSiteTarget(): SiteTarget {
       }
       const queryLang = params.get('lang')?.toLowerCase();
       if (queryLang === 'en') return 'europe';
-      if (queryLang === 'nl') return 'benelux';
+      if (queryLang === 'nl' || queryLang === 'fr' || queryLang === 'de') return 'benelux';
     } catch {
       // ignore
     }
 
-    // B. Check localStorage for user-selected profile (takes precedence over automatic hostname detection)
+    // B. Check localStorage for user-selected profile
     try {
       const stored = localStorage.getItem('site_target')?.toLowerCase();
       if (stored === 'europe' || stored === 'benelux') {
@@ -51,7 +57,7 @@ export function getDefaultSiteTarget(): SiteTarget {
       // ignore
     }
 
-    // C. Hostname matching for production domains (explicitly ignore Cloud Run / dev domains like .run.app and localhost)
+    // C. Hostname matching for production domains
     const isCloudOrLocal =
       host === 'localhost' ||
       host === '127.0.0.1' ||
@@ -90,8 +96,7 @@ export function getDefaultSiteTarget(): SiteTarget {
         host.includes('-eu.') ||
         host.includes('-eu-') ||
         host.includes('ped-compliance-hub') ||
-        host.includes('ped-kennisbank-platform-eu') ||
-        host.endsWith('.eu')
+        host.includes('ped-kennisbank-platform-eu')
       ) {
         return 'europe';
       }
@@ -123,15 +128,60 @@ export function getDefaultSiteTarget(): SiteTarget {
   return 'benelux';
 }
 
-export function getSiteContent(target?: SiteTarget): SiteContent {
+export function getDefaultBeneluxLanguage(): BeneluxLanguage {
+  if (serverOverrideLang) {
+    return serverOverrideLang;
+  }
+
+  if (typeof window !== 'undefined' && window.location) {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const queryLang = params.get('lang')?.toLowerCase();
+      if (queryLang === 'fr') return 'fr';
+      if (queryLang === 'de') return 'de';
+      if (queryLang === 'nl') return 'nl';
+    } catch {
+      // ignore
+    }
+
+    try {
+      const stored = localStorage.getItem('benelux_lang')?.toLowerCase();
+      if (stored === 'fr' || stored === 'de' || stored === 'nl') {
+        return stored as BeneluxLanguage;
+      }
+    } catch {
+      // ignore
+    }
+
+    try {
+      const navLang = navigator.language?.toLowerCase();
+      if (navLang?.startsWith('fr')) return 'fr';
+      if (navLang?.startsWith('de')) return 'de';
+    } catch {
+      // ignore
+    }
+  }
+
+  return 'nl';
+}
+
+export function getSiteContent(target?: SiteTarget, beneluxLang?: BeneluxLanguage): SiteContent {
   const activeTarget = target || getDefaultSiteTarget();
-  return SITE_CONTENT_MAP[activeTarget] || beneluxContent;
+  if (activeTarget === 'europe') {
+    return europeContent;
+  }
+  const activeLang = beneluxLang || getDefaultBeneluxLanguage();
+  return getBeneluxContent(activeLang);
 }
 
 type TargetChangeListener = (target: SiteTarget) => void;
+type LangChangeListener = (lang: BeneluxLanguage) => void;
+
 const targetListeners = new Set<TargetChangeListener>();
+const langListeners = new Set<LangChangeListener>();
 
 let currentActiveTarget: SiteTarget = getDefaultSiteTarget();
+let currentActiveBeneluxLang: BeneluxLanguage = getDefaultBeneluxLanguage();
 
 function broadcastTargetChange(newTarget: SiteTarget) {
   currentActiveTarget = newTarget;
@@ -144,23 +194,46 @@ function broadcastTargetChange(newTarget: SiteTarget) {
   });
 }
 
+function broadcastLangChange(newLang: BeneluxLanguage) {
+  currentActiveBeneluxLang = newLang;
+  if (typeof document !== 'undefined') {
+    document.documentElement.lang = newLang;
+  }
+  langListeners.forEach((listener) => {
+    try {
+      listener(newLang);
+    } catch (err) {
+      console.error('Error updating site lang listener:', err);
+    }
+  });
+}
+
 export function useSiteContent() {
   const [target, setTarget] = useState<SiteTarget>(() => currentActiveTarget);
+  const [beneluxLang, setBeneluxLang] = useState<BeneluxLanguage>(() => currentActiveBeneluxLang);
 
   useEffect(() => {
-    const listener: TargetChangeListener = (newTarget) => {
+    const tListener: TargetChangeListener = (newTarget) => {
       setTarget(newTarget);
     };
-    targetListeners.add(listener);
+    const lListener: LangChangeListener = (newLang) => {
+      setBeneluxLang(newLang);
+    };
+
+    targetListeners.add(tListener);
+    langListeners.add(lListener);
 
     const handleStorage = () => {
-      const stored = getDefaultSiteTarget();
-      broadcastTargetChange(stored);
+      const storedTarget = getDefaultSiteTarget();
+      broadcastTargetChange(storedTarget);
+      const storedLang = getDefaultBeneluxLanguage();
+      broadcastLangChange(storedLang);
     };
     window.addEventListener('storage', handleStorage);
 
     return () => {
-      targetListeners.delete(listener);
+      targetListeners.delete(tListener);
+      langListeners.delete(lListener);
       window.removeEventListener('storage', handleStorage);
     };
   }, []);
@@ -177,9 +250,8 @@ export function useSiteContent() {
       const searchParams = new URLSearchParams(window.location.search);
       searchParams.set('site', newTarget);
 
-      // Find equivalent page slug in target content
-      const fromContent = target === 'europe' ? europeContent : beneluxContent;
-      const toContent = newTarget === 'europe' ? europeContent : beneluxContent;
+      const fromContent = target === 'europe' ? europeContent : getBeneluxContent(beneluxLang);
+      const toContent = newTarget === 'europe' ? europeContent : getBeneluxContent(beneluxLang);
 
       const activeItem = fromContent.navItems.find((item) => item.slug === currentPath);
       let targetPath = '/';
@@ -198,16 +270,57 @@ export function useSiteContent() {
         window.history.pushState({ site: newTarget, path: targetPath }, '', newUrl);
         window.dispatchEvent(new PopStateEvent('popstate'));
       } catch {
-        // Fallback for sandboxed iframes
+        // Fallback
       }
     }
 
     broadcastTargetChange(newTarget);
   };
 
+  const setLanguage = (newLang: BeneluxLanguage) => {
+    try {
+      localStorage.setItem('benelux_lang', newLang);
+    } catch {
+      // ignore
+    }
+
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.set('lang', newLang);
+      const queryString = searchParams.toString() ? `?${searchParams.toString()}` : '';
+      const newUrl = `${window.location.pathname}${queryString}`;
+      try {
+        window.history.pushState({ lang: newLang }, '', newUrl);
+      } catch {
+        // Fallback
+      }
+      document.documentElement.lang = newLang;
+    }
+
+    broadcastLangChange(newLang);
+  };
+
+  const activeLang: SiteLanguage = target === 'europe' ? 'en' : beneluxLang;
+  const content = target === 'europe' ? europeContent : getBeneluxContent(beneluxLang);
+
+  // Internationalization helper function
+  const t = <T>(options: { nl: T; fr: T; de: T; en?: T }): T => {
+    if (target === 'europe') {
+      return (options.en ?? options.nl) as T;
+    }
+    if (beneluxLang === 'fr') return options.fr;
+    if (beneluxLang === 'de') return options.de;
+    return options.nl;
+  };
+
   return {
     target,
-    content: SITE_CONTENT_MAP[target] || beneluxContent,
+    lang: activeLang,
+    beneluxLang,
+    content,
     switchTarget,
+    setLanguage,
+    availableLanguages: BENELUX_LANGUAGES,
+    t,
   };
 }

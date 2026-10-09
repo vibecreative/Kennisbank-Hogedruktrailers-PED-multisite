@@ -1,4 +1,6 @@
 export type SiteTarget = 'benelux' | 'europe';
+export type BeneluxLanguage = 'nl' | 'fr' | 'de';
+export type SiteLanguage = 'nl' | 'fr' | 'de' | 'en';
 
 export interface SiteMeta {
   id: SiteTarget;
@@ -138,7 +140,7 @@ export interface ChecklistItemConfig {
   title: string;
   description: string;
   requirement: string;
-  criticality: 'Verplicht' | 'Aandachtspunt' | 'Aanbevolen' | 'Mandatory' | 'Critical Check' | 'Recommended';
+  criticality: 'Verplicht' | 'Aandachtspunt' | 'Aanbevolen' | 'Mandatory' | 'Critical Check' | 'Recommended' | 'Obligatoire' | 'Point d\'attention' | 'Recommandé' | 'Pflicht' | 'Kritischer Punkt' | 'Empfohlen';
 }
 
 export interface SiteContent {

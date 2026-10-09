@@ -1,9 +1,9 @@
 import React from 'react';
-import { Globe } from 'lucide-react';
+import { Globe, Languages } from 'lucide-react';
 import { useSiteContent } from '../content';
 
 export const DevSwitcher: React.FC = () => {
-  const { target, switchTarget } = useSiteContent();
+  const { target, beneluxLang, setLanguage, switchTarget } = useSiteContent();
 
   // Only display in development / preview environments (AI Studio dev/pre URLs or localhost)
   if (typeof window === 'undefined') return null;
@@ -52,10 +52,9 @@ export const DevSwitcher: React.FC = () => {
               ? 'bg-amber-500 text-slate-950 font-bold shadow-xs'
               : 'text-slate-300 hover:text-white'
           }`}
-          title="Schakel ontwikkelomgeving naar Benelux (NL/BE)"
+          title="Schakel ontwikkelomgeving naar Benelux (NL · FR · DE)"
         >
-          <span>🇳🇱</span>
-          <span>NL/BE</span>
+          <span>BeNeLux</span>
         </button>
         <button
           onClick={() => switchTarget('europe')}
@@ -66,10 +65,28 @@ export const DevSwitcher: React.FC = () => {
           }`}
           title="Switch development environment to Europe (EU/EN)"
         >
-          <span>🇪🇺</span>
-          <span>EU (EN)</span>
+          <span>🇪🇺 EU (EN)</span>
         </button>
       </div>
+
+      {target === 'benelux' && (
+        <div className="inline-flex rounded-full bg-slate-800 p-0.5 border border-slate-700 items-center">
+          <Languages className="w-3 h-3 text-slate-400 ml-1.5 mr-0.5" />
+          {(['nl', 'fr', 'de'] as const).map((l) => (
+            <button
+              key={l}
+              onClick={() => setLanguage(l)}
+              className={`px-2 py-0.5 rounded-full text-[11px] font-mono uppercase transition-all ${
+                beneluxLang === l
+                  ? 'bg-amber-400 text-slate-950 font-bold'
+                  : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      )}
     </aside>
   );
 };

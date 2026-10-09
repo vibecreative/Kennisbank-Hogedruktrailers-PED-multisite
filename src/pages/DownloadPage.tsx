@@ -6,14 +6,15 @@ import {
   Square
 } from 'lucide-react';
 import { useSiteContent } from '../content';
+import { getDownloadTranslations } from '../content/translations/download';
 
 interface DownloadPageProps {
   onNavigate?: (slug: string) => void;
 }
 
 export const DownloadPage: React.FC<DownloadPageProps> = () => {
-  const { content, target } = useSiteContent();
-  const isEurope = target === 'europe';
+  const { content, lang } = useSiteContent();
+  const txt = getDownloadTranslations(lang);
 
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [selectedPhase, setSelectedPhase] = useState<string>('all');
@@ -47,19 +48,13 @@ export const DownloadPage: React.FC<DownloadPageProps> = () => {
         <div className="space-y-4">
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-700 font-semibold bg-amber-50 border border-amber-200 px-2.5 py-1 rounded">
             <Download className="w-3.5 h-3.5" />
-            {isEurope ? "Audit Center & Statutory Guide" : "Downloadcenter & Audittool"}
+            {txt.header.badge}
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold font-serif text-slate-900 tracking-tight">
-            {isEurope 
-              ? "High-Pressure Trailer Procurement & Compliance Checklist" 
-              : "Inkoop- & Keuringschecklist voor Hogedruktrailers"
-            }
+            {txt.header.title}
           </h1>
           <p className="text-base text-slate-600 leading-relaxed max-w-3xl">
-            {isEurope 
-              ? "The actionable compliance checklist for trailer buyers, fleet managers, and QHSE officers. Ask the 10 critical verification questions to your trailer dealer before signing the purchase order, and safeguard statutory conformity with Directive 2014/68/EU."
-              : "De praktische controlelijst voor inkopers, wagenparkbeheerders en directies. Wat u eigenlijk ook moet weten bij de aankoop: 10 gerichte controlevragen om vooraf helderheid te krijgen over keuringsplichten, exploitatiekosten en wettelijke conformiteit."
-            }
+            {txt.header.desc}
           </p>
         </div>
 
@@ -68,10 +63,10 @@ export const DownloadPage: React.FC<DownloadPageProps> = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
             <div>
               <span className="text-xs font-mono font-semibold uppercase tracking-wider text-amber-700">
-                {isEurope ? "Interactive Trailer Audit Protocol" : "Interactieve Auditlijst Hogedruktrailers"}
+                {txt.dashboard.title}
               </span>
               <h2 className="font-serif font-bold text-xl text-slate-900 mt-1">
-                {isEurope ? "10-Point Technical Verification Protocol for High-Pressure Trailers" : "10-Punten Controlelijst voor Hogedruktrailers & Stoomunits"}
+                {txt.header.title}
               </h2>
             </div>
 
@@ -82,7 +77,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = () => {
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs"
               >
                 <Printer className="w-3.5 h-3.5" />
-                <span>{isEurope ? "Print / Save PDF (A4)" : "Print / PDF opslaan (A4)"}</span>
+                <span>{txt.dashboard.printBtn}</span>
               </button>
             </div>
           </div>
@@ -90,9 +85,9 @@ export const DownloadPage: React.FC<DownloadPageProps> = () => {
           {/* Progress Bar */}
           <div className="bg-slate-50 p-4 rounded-lg border border-slate-200/80 space-y-2">
             <div className="flex items-center justify-between text-xs font-medium text-slate-700">
-              <span>{isEurope ? "Audit Progress" : "Voortgang audit"}:</span>
+              <span>{txt.dashboard.progressLabel}</span>
               <span className="font-mono font-bold text-slate-900">
-                {completedCount} / {checklistItems.length} {isEurope ? "verified" : "gecontroleerd"} ({progressPercent}%)
+                {completedCount} / {checklistItems.length} {txt.dashboard.completed} ({progressPercent}%)
               </span>
             </div>
             <div className="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
@@ -113,7 +108,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = () => {
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              {isEurope ? "All Phases (10)" : "Alle Fasen (10)"}
+              {txt.dashboard.allPhases} ({checklistItems.length})
             </button>
             {phases.map(phase => (
               <button
@@ -163,7 +158,7 @@ export const DownloadPage: React.FC<DownloadPageProps> = () => {
                       </span>
                       <div className="flex items-center gap-1.5">
                         <span className={`text-[11px] font-medium px-2 py-0.5 rounded ${
-                          item.criticality === 'Verplicht' || item.criticality === 'Mandatory'
+                          item.criticality === 'Verplicht' || item.criticality === 'Mandatory' || item.criticality === 'Obligatoire' || item.criticality === 'Pflicht'
                             ? 'bg-rose-100 text-rose-800'
                             : 'bg-amber-100 text-amber-900'
                         }`}>

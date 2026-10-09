@@ -4,8 +4,6 @@ import {
   Search, 
   HelpCircle, 
   FileText, 
-  ExternalLink,
-  BookOpen,
   ArrowRight
 } from 'lucide-react';
 import { useSiteContent } from '../content';
@@ -21,7 +19,7 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
   initialCategory = 'all',
   className = '',
 }) => {
-  const { content, target } = useSiteContent();
+  const { content, target, t } = useSiteContent();
   const isEurope = target === 'europe';
 
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
@@ -33,13 +31,20 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
     'wat-is-de-2-liter-grens': true,
   });
 
+  const allCategoryLabel = t({
+    nl: 'Alle Vragen',
+    fr: 'Toutes les Questions',
+    de: 'Alle Fragen',
+    en: 'All Questions',
+  });
+
   const categories = useMemo(() => {
     const rawCategories = Array.from(new Set(content.faq.map((item) => item.category)));
     return [
-      { id: 'all', label: isEurope ? 'All Questions' : 'Alle Vragen' },
+      { id: 'all', label: allCategoryLabel },
       ...rawCategories.map((c) => ({ id: c, label: c })),
     ];
-  }, [content.faq, isEurope]);
+  }, [content.faq, allCategoryLabel]);
 
   const toggleItem = (id: string) => {
     setOpenItems((prev) => ({
@@ -84,11 +89,12 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={
-              isEurope
-                ? 'Search FAQ (e.g., 2-litre threshold, Category IV, NoBo, penalties)...'
-                : 'Zoek in veelgestelde vragen (bijv. KvI, 2-liter, boetes)...'
-            }
+            placeholder={t({
+              nl: 'Zoek in veelgestelde vragen (bijv. KvI, 2-liter, boetes)...',
+              fr: 'Rechercher dans la FAQ (ex. seuil 2 litres, EDTC, Catégorie IV, amendes)...',
+              de: 'FAQ durchsuchen (z. B. 2-Liter-Grenze, EDTC, Kategorie IV, Strafen)...',
+              en: 'Search FAQ (e.g., 2-litre threshold, Category IV, NoBo, penalties)...',
+            })}
             className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
           />
           {searchQuery && (
@@ -107,14 +113,14 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
             onClick={expandAll}
             className="hover:text-amber-700 underline underline-offset-2 transition-colors"
           >
-            {isEurope ? 'Expand all' : 'Alles uitklappen'}
+            {t({ nl: 'Alles uitklappen', fr: 'Tout déplier', de: 'Alle ausklappen', en: 'Expand all' })}
           </button>
           <span className="text-slate-300">·</span>
           <button
             onClick={collapseAll}
             className="hover:text-amber-700 underline underline-offset-2 transition-colors"
           >
-            {isEurope ? 'Collapse all' : 'Alles inklappen'}
+            {t({ nl: 'Alles inklappen', fr: 'Tout replier', de: 'Alle einklappen', en: 'Collapse all' })}
           </button>
         </div>
       </div>
@@ -146,14 +152,20 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
           <p className="text-sm font-semibold text-slate-800">
             {isEurope 
               ? `No questions found matching "${searchQuery}"`
-              : `Geen vragen gevonden voor "${searchQuery}"`
+              : t({
+                  nl: `Geen vragen gevonden voor "${searchQuery}"`,
+                  fr: `Aucune question trouvée pour "${searchQuery}"`,
+                  de: `Keine Fragen gefunden für "${searchQuery}"`,
+                })
             }
           </p>
           <p className="text-xs text-slate-500">
-            {isEurope
-              ? 'Try another search term or reset category filters.'
-              : 'Probeer een andere zoekterm of selecteer een andere categorie.'
-            }
+            {t({
+              nl: 'Probeer een andere zoekterm of selecteer een andere categorie.',
+              fr: 'Essayez un autre mot-clé ou réinitialisez les catégories.',
+              de: 'Versuchen Sie einen anderen Suchbegriff oder setzen Sie die Filter zurück.',
+              en: 'Try another search term or reset category filters.',
+            })}
           </p>
           <button
             onClick={() => {
@@ -162,7 +174,12 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
             }}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-md transition-colors mt-2"
           >
-            {isEurope ? 'Reset filters' : 'Wis zoekopdracht & filters'}
+            {t({
+              nl: 'Wis zoekopdracht & filters',
+              fr: 'Réinitialiser les filtres',
+              de: 'Filter zurücksetzen',
+              en: 'Reset filters',
+            })}
           </button>
         </div>
       ) : (
@@ -208,10 +225,12 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
                       <span className="text-[11px] text-slate-400 flex items-center gap-1">
                         <FileText className="w-3.5 h-3.5 text-amber-500" />
                         <span>
-                          {isEurope 
-                            ? 'Reference: Directive 2014/68/EU & In-Service Regulations' 
-                            : 'Wettelijke grondslag: WBDA 2016 & Richtlijn 2014/68/EU'
-                          }
+                          {t({
+                            nl: 'Wettelijke grondslag: WBDA 2016, Codex Welzijn & Richtlijn 2014/68/EU',
+                            fr: 'Fondement juridique : Codex Livre IV, ITM & Directive 2014/68/UE',
+                            de: 'Rechtsgrundlage: ITM, Codex Wohlbefinden & Richtlinie 2014/68/EU',
+                            en: 'Reference: Directive 2014/68/EU & In-Service Regulations',
+                          })}
                         </span>
                       </span>
 
@@ -220,7 +239,14 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
                           onClick={() => onNavigate('two-liter-grens')}
                           className="inline-flex items-center gap-1 text-amber-700 hover:text-amber-800 font-medium"
                         >
-                          <span>{isEurope ? 'Read technical background' : 'Lees meer in de kennisbank'}</span>
+                          <span>
+                            {t({
+                              nl: 'Lees meer in de kennisbank',
+                              fr: 'En savoir plus dans la base de connaissances',
+                              de: 'Mehr in der Wissensdatenbank lesen',
+                              en: 'Read technical background',
+                            })}
+                          </span>
                           <ArrowRight className="w-3 h-3" />
                         </button>
                       )}
