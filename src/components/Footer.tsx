@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Scale, FileText, Globe, Languages } from 'lucide-react';
+import { ShieldCheck, Scale, FileText, Globe, Languages, ExternalLink } from 'lucide-react';
 import { useSiteContent } from '../content';
 
 interface FooterProps {
@@ -7,7 +7,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
-  const { target, beneluxLang, setLanguage, availableLanguages, content, switchTarget, t } = useSiteContent();
+  const { target, beneluxLang, setLanguage, availableLanguages, content, switchTarget, t, isSeparateDomain, getTargetUrl } = useSiteContent();
 
   const isEurope = target === 'europe';
 
@@ -84,22 +84,52 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <Globe className="w-3.5 h-3.5 text-slate-400" />
               <span>{isEurope ? 'Selected Profile:' : 'Domein / Profiel:'}</span>
               <div className="inline-flex rounded-md border border-slate-700 bg-slate-800 p-0.5">
-                <button
-                  onClick={() => switchTarget('benelux')}
-                  className={`px-2 py-0.5 rounded text-xs transition-colors ${
-                    target === 'benelux' ? 'bg-amber-600 text-white font-medium' : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  BeNeLux (NL · FR · DE)
-                </button>
-                <button
-                  onClick={() => switchTarget('europe')}
-                  className={`px-2 py-0.5 rounded text-xs transition-colors ${
-                    target === 'europe' ? 'bg-sky-600 text-white font-medium' : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  European Union (EN)
-                </button>
+                {target === 'benelux' ? (
+                  <span className="px-2 py-0.5 rounded text-xs bg-amber-600 text-white font-medium cursor-default">
+                    BeNeLux (NL · FR · DE)
+                  </span>
+                ) : (
+                  <a
+                    href={getTargetUrl('benelux')}
+                    onClick={(e) => {
+                      if (!isSeparateDomain) {
+                        e.preventDefault();
+                        switchTarget('benelux');
+                      }
+                    }}
+                    className="px-2 py-0.5 rounded text-xs text-slate-400 hover:text-white transition-colors inline-flex items-center gap-1 group"
+                    title={isEurope ? 'Visit BeNeLux platform (hogedruktrailerkeuren.eu)' : 'Naar BeNeLux platform'}
+                  >
+                    <span>BeNeLux (NL · FR · DE)</span>
+                    {isSeparateDomain && <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100" />}
+                  </a>
+                )}
+
+                {target === 'europe' ? (
+                  <span className="px-2 py-0.5 rounded text-xs bg-sky-600 text-white font-medium cursor-default">
+                    European Union (EN)
+                  </span>
+                ) : (
+                  <a
+                    href={getTargetUrl('europe')}
+                    onClick={(e) => {
+                      if (!isSeparateDomain) {
+                        e.preventDefault();
+                        switchTarget('europe');
+                      }
+                    }}
+                    className="px-2 py-0.5 rounded text-xs text-slate-400 hover:text-white transition-colors inline-flex items-center gap-1 group"
+                    title={t({
+                      nl: 'Naar EU platform (Engels)',
+                      fr: 'Vers la plateforme UE (anglais)',
+                      de: 'Zur EU-Plattform (Englisch)',
+                      en: 'Visit European Union platform',
+                    })}
+                  >
+                    <span>European Union (EN)</span>
+                    {isSeparateDomain && <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100" />}
+                  </a>
+                )}
               </div>
             </div>
           </div>

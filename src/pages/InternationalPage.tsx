@@ -24,7 +24,7 @@ interface InternationalPageProps {
 }
 
 export const InternationalPage: React.FC<InternationalPageProps> = ({ onNavigate, onOpenWizard }) => {
-  const { target, lang, switchTarget } = useSiteContent();
+  const { target, lang, switchTarget, isSeparateDomain, getTargetUrl } = useSiteContent();
   const isEurope = target === 'europe';
   const txt = getInternationalTranslations(lang);
 
@@ -64,13 +64,19 @@ export const InternationalPage: React.FC<InternationalPageProps> = ({ onNavigate
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => switchTarget('europe')}
+            <a
+              href={getTargetUrl('europe')}
+              onClick={(e) => {
+                if (!isSeparateDomain) {
+                  e.preventDefault();
+                  switchTarget('europe');
+                }
+              }}
               className="shrink-0 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-xs"
             >
               <span>{txt.euBanner.button}</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            </a>
           </div>
         )}
 

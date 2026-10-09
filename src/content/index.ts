@@ -13,6 +13,72 @@ export const BENELUX_LANGUAGES: Array<{ code: BeneluxLanguage; label: string; fl
   { code: 'de', label: 'Deutsch', flag: '🇩🇪', countryNote: 'Luxemburg / Ostbelgien' },
 ];
 
+export const DEFAULT_BENELUX_URL = 'https://www.hogedruktrailerkeuren.eu';
+export const DEFAULT_EU_URL = 'https://kennisbank-hogedruktrailers-ped-mul-two.vercel.app';
+export const FUTURE_EU_DOMAIN = 'https://www.highpressuresteaminspection.eu';
+
+export function getTargetSiteBaseUrl(target: SiteTarget): string {
+  if (target === 'benelux') {
+    return (
+      (typeof process !== 'undefined' && process.env?.VITE_BENELUX_SITE_URL) ||
+      (typeof import.meta !== 'undefined' && import.meta.env?.VITE_BENELUX_SITE_URL) ||
+      DEFAULT_BENELUX_URL
+    );
+  }
+
+  return (
+    (typeof process !== 'undefined' && process.env?.VITE_EU_SITE_URL) ||
+    (typeof import.meta !== 'undefined' && import.meta.env?.VITE_EU_SITE_URL) ||
+    DEFAULT_EU_URL
+  );
+}
+
+export function isSeparateDomainDeployment(): boolean {
+  if (typeof window === 'undefined') return false;
+  const host = window.location.hostname.toLowerCase();
+  // Keep in-app switching inside AI Studio dev/pre views and local development
+  if (
+    host === 'localhost' ||
+    host === '127.0.0.1' ||
+    host.endsWith('.run.app') ||
+    host.includes('ais-dev') ||
+    host.includes('ais-pre')
+  ) {
+    return false;
+  }
+  // True for custom domains or deployed Vercel apps
+  return (
+    host.includes('hogedruktrailerkeuren') ||
+    host.includes('highpressuresteaminspection') ||
+    host.includes('high-pressure-steam-inspection') ||
+    host.includes('vercel.app')
+  );
+}
+
+export function getEquivalentPath(fromTarget: SiteTarget, toTarget: SiteTarget, currentPath: string): string {
+  const cleanPath = currentPath.replace(/\/$/, '') || '/';
+  const fromContent = fromTarget === 'europe' ? europeContent : getBeneluxContent();
+  const toContent = toTarget === 'europe' ? europeContent : getBeneluxContent();
+
+  const activeItem = fromContent.navItems.find((item) => item.slug === cleanPath);
+  if (activeItem) {
+    const equivalentItem = toContent.navItems.find((item) => item.id === activeItem.id);
+    if (equivalentItem) {
+      return equivalentItem.slug;
+    }
+  }
+  return '/';
+}
+
+export function getTargetSiteUrl(target: SiteTarget, currentPath?: string): string {
+  const baseUrl = getTargetSiteBaseUrl(target).replace(/\/$/, '');
+  const path = currentPath
+    ? getEquivalentPath(target === 'europe' ? 'benelux' : 'europe', target, currentPath)
+    : '/';
+  const cleanPath = path === '/' ? '' : path;
+  return `${baseUrl}${cleanPath}`;
+}
+
 let serverOverrideTarget: SiteTarget | null = null;
 let serverOverrideLang: BeneluxLanguage | null = null;
 
@@ -47,17 +113,6 @@ export function getDefaultSiteTarget(): SiteTarget {
       // ignore
     }
 
-    // B. Check localStorage for user-selected profile
-    try {
-      const stored = localStorage.getItem('site_target')?.toLowerCase();
-      if (stored === 'europe' || stored === 'benelux') {
-        return stored;
-      }
-    } catch {
-      // ignore
-    }
-
-    // C. Hostname matching for production domains
     const isCloudOrLocal =
       host === 'localhost' ||
       host === '127.0.0.1' ||
@@ -65,13 +120,17 @@ export function getDefaultSiteTarget(): SiteTarget {
       host.includes('ais-dev') ||
       host.includes('ais-pre');
 
+    // B. Hostname matching for production domains takes priority over stale localStorage
     if (!isCloudOrLocal) {
       // 1. Explicit domain matching for primary custom domains
       if (host.includes('hogedruktrailerkeuren')) {
         return 'benelux';
       }
 
-      if (host.includes('high-pressure-steam-inspection')) {
+      if (
+        host.includes('highpressuresteaminspection') ||
+        host.includes('high-pressure-steam-inspection')
+      ) {
         return 'europe';
       }
 
@@ -110,6 +169,16 @@ export function getDefaultSiteTarget(): SiteTarget {
       ) {
         return 'benelux';
       }
+    }
+
+    // C. Check localStorage for user-selected profile in dev / preview environments
+    try {
+      const stored = localStorage.getItem('site_target')?.toLowerCase();
+      if (stored === 'europe' || stored === 'benelux') {
+        return stored;
+      }
+    } catch {
+      // ignore
     }
   }
 
@@ -263,6 +332,13 @@ export function useSiteContent() {
         }
       }
 
+      // If running on a live/deployed separate domain, redirect directly to the target domain
+      if (isSeparateDomainDeployment() && newTarget !== target) {
+        const targetUrl = getTargetSiteUrl(newTarget, currentPath);
+        window.location.href = targetUrl;
+        return;
+      }
+
       const queryString = searchParams.toString() ? `?${searchParams.toString()}` : '';
       const newUrl = `${targetPath}${queryString}`;
 
@@ -322,5 +398,10 @@ export function useSiteContent() {
     setLanguage,
     availableLanguages: BENELUX_LANGUAGES,
     t,
+    isSeparateDomain: isSeparateDomainDeployment(),
+    getTargetUrl: (targetToGet: SiteTarget) => {
+      const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
+      return getTargetSiteUrl(targetToGet, currentPath);
+    },
   };
 }
