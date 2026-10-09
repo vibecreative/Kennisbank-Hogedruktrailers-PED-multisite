@@ -3,11 +3,37 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/((?!assets/|images/|robots\\.txt|sitemap\\.xml).*)",
+      "source": "/((?!assets/|images/|robots\\.txt|sitemap\\.xml|sitemap\\.xsl).*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=UTF-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xsl",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=UTF-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
     {
       "source": "/assets/(.*)",
       "headers": [

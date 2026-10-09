@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hogedruktrailerkeuren.eu/sitemap.xml
-Sitemap: https://high-pressure-steam-inspection.eu/sitemap.xml
+Sitemap: https://www.hogedruktrailerkeuren.eu/sitemap.xml
+
