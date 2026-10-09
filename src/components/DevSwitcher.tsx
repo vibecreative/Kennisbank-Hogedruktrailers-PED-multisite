@@ -14,6 +14,7 @@ export const DevSwitcher: React.FC = () => {
   // Never show on custom production domains or deployed Vercel domains
   if (
     host.includes('hogedruktrailerkeuren') ||
+    host.includes('highpressuresteaminspection') ||
     host.includes('high-pressure-steam-inspection') ||
     host.includes('kennisbank-hogedruktrailers')
   ) {

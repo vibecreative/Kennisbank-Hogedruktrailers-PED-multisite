@@ -14,8 +14,7 @@ export const BENELUX_LANGUAGES: Array<{ code: BeneluxLanguage; label: string; fl
 ];
 
 export const DEFAULT_BENELUX_URL = 'https://www.hogedruktrailerkeuren.eu';
-export const DEFAULT_EU_URL = 'https://kennisbank-hogedruktrailers-ped-mul-two.vercel.app';
-export const FUTURE_EU_DOMAIN = 'https://www.highpressuresteaminspection.eu';
+export const DEFAULT_EU_URL = 'https://www.highpressuresteaminspection.eu';
 
 export function getTargetSiteBaseUrl(target: SiteTarget): string {
   if (target === 'benelux') {
