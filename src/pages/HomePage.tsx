@@ -63,7 +63,34 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               </p>
               {content.hero.footnote && (
                 <p className="text-xs text-slate-400/90 leading-relaxed italic border-l-2 border-amber-500/40 pl-3 pt-0.5">
-                  {content.hero.footnote}
+                  {content.hero.footnoteLink ? (
+                    (() => {
+                      const text = content.hero.footnote;
+                      const linkText = content.hero.footnoteLink.text;
+                      const parts = text.split(linkText);
+                      if (parts.length === 2) {
+                        return (
+                          <>
+                            {parts[0]}
+                            <a
+                              href={content.hero.footnoteLink.path}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                onNavigate(content.hero.footnoteLink!.targetId);
+                              }}
+                              className="text-amber-400 hover:text-amber-300 underline underline-offset-2 decoration-amber-400/60 transition-colors font-medium cursor-pointer"
+                            >
+                              {linkText}
+                            </a>
+                            {parts[1]}
+                          </>
+                        );
+                      }
+                      return text;
+                    })()
+                  ) : (
+                    content.hero.footnote
+                  )}
                 </p>
               )}
             </div>

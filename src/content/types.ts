@@ -30,6 +30,11 @@ export interface HeroConfig {
   titleHighlight: string;
   description: string;
   footnote?: string;
+  footnoteLink?: {
+    text: string;
+    targetId: string;
+    path: string;
+  };
   ctaCalculator: string;
   ctaWizard: string;
   stats: Array<{

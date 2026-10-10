@@ -81,10 +81,15 @@ export const europeContent: SiteContent = {
   ],
   hero: {
     badge: 'European Regulatory Standard: PED 2014/68/EU • EN 12952 • In-Service Frameworks',
-    title: 'High-Pressure Steam Trailers,',
-    titleHighlight: 'The Hidden Inspection Mandate & TCO',
-    description: 'Does the high-pressure trailer have a burner or heat exchanger capacity exceeding 2 litres at > 110 °C? Under European law, this qualifies as a PED Category IV steam generator: an initial Commissioning Inspection (KvI) by an authorized Notified Body or accredited inspection service (e.g., TÜV, Dekra, Kiwa, Vinçotte) and periodic (biennial*) recertifications are legally mandatory. If the volume remains below 2 litres (SEP / Sound Engineering Practice), the trailer is completely exempt from these statutory inspections.',
-    footnote: '* Inspection intervals vary by member state (e.g. 24 months in the Netherlands under WBDA 2016, whereas Belgian Codex mandates annual recertification by default unless explicitly licensed otherwise).',
+    title: 'High-Pressure Trailers & Steam Units,',
+    titleHighlight: 'What You Need to Know When Purchasing',
+    description: 'Does the high-pressure trailer have a burner/heat exchanger capacity exceeding 2 litres at > 110 °C? Under European law, this qualifies as a PED Category IV steam generator: an initial Commissioning Inspection (KvI) by an authorized Notified Body or accredited inspection service (e.g., TÜV, Dekra, Kiwa, Vinçotte) and periodic (biennial*) recertifications are legally mandatory. If the volume remains below 2 litres (SEP / Sound Engineering Practice), the trailer is completely exempt from these statutory inspections.',
+    footnote: '* Inspection intervals vary by member state.',
+    footnoteLink: {
+      text: 'member state',
+      targetId: 'internationaal',
+      path: '/eu-member-state-regulations',
+    },
     ctaCalculator: 'Calculate Trailer Lifecycle TCO',
     ctaWizard: 'Check Your High-Pressure Trailer',
     stats: [
