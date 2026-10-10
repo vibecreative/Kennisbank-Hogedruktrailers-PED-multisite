@@ -83,7 +83,8 @@ export const beneluxContentNl: SiteContent = {
     badge: 'Wettelijke Kaders voor Hogedruktrailers: NL (WBDA 2016) • BE (Codex Welzijn) • PED 2014/68/EU',
     title: 'Hogedruktrailers & Stoomunits,',
     titleHighlight: 'Wat u Moet Weten bij Aankoop',
-    description: 'Bij de aankoop van professionele heetwater- en stoom-hogedruktrailers ligt de focus vaak op werkdruk en reinigingskracht, maar wat u eigenlijk ook moet weten is dat periodieke herkeuring van een PED Categorie IV installatie wettelijk verplicht is. Ontdek de juridische kaders, de 2-liter grens en de werkelijke exploitatiekosten.',
+    description: 'Heeft de hogedruktrailer een brander/warmtewisselaar van meer dan 2 liter bij > 110 °C? Dan is dit wettelijk een PED Categorie IV stoominstallatie: een Keuring voor Ingebruikneming (KvI) door een NL-CBI (Kiwa, TÜV, Dekra) of Belgische EDTC (Vinçotte) én periodieke (2-jaarlijkse*) herkeuringen zijn verplicht. Blijft de inhoud onder de 2 liter (SEP), dan is de hogedruktrailer volledig vrijgesteld van deze keuringen.',
+    footnote: '* Deze interval kan per land verschillen (in Nederland geldt 24 maanden via WBDA 2016, terwijl in België onder de Codex standaard een jaarlijkse herkeuring verplicht is, tenzij specifiek anders vergund).',
     ctaCalculator: 'Bereken Hogedruktrailer TCO & Keuringskosten',
     ctaWizard: 'Check Uw Hogedruktrailer',
     stats: [

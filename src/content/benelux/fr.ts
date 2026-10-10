@@ -83,7 +83,8 @@ export const beneluxContentFr: SiteContent = {
     badge: 'Cadres Légaux pour Remorques Haute Pression : BE (Codex) • NL (WBDA 2016) • LU (ITM) • DESP 2014/68/UE',
     title: 'Remorques Haute Pression & Unités Vapeur,',
     titleHighlight: 'Ce Qu’il Faut Savoir à l’Achat',
-    description: 'Lors de l’achat d’une remorque haute pression eau chaude ou vapeur professionnelle, l’attention se porte souvent sur la pression et la force de nettoyage, mais ce qu’il faut absolument savoir, c’est que le contrôle périodique d’une installation DESP Catégorie IV est une obligation légale stricte. Découvrez les cadres juridiques, le seuil des 2 litres et les coûts réels d’exploitation.',
+    description: 'La remorque haute pression dispose-t-elle d’un brûleur/échangeur de plus de 2 litres à > 110 °C ? Selon la loi, il s’agit d’une installation vapeur DESP Catégorie IV : une mise en service (KvI) par un organisme agréé (Vinçotte, Dekra, TÜV, Kiwa) ainsi que des contrôles périodiques (biennaux*) sont obligatoires. Si le volume reste inférieur à 2 litres (SEP), la remorque haute pression est totalement exemptée de ces contrôles.',
+    footnote: '* Cet intervalle peut varier selon le pays (aux Pays-Bas : 24 mois selon la WBDA 2016, tandis qu’en Belgique le Codex impose par défaut un contrôle annuel, sauf dérogation spécifique accordée).',
     ctaCalculator: 'Calculer le TCO & Coûts d’Inspection',
     ctaWizard: 'Vérifier Votre Remorque Haute Pression',
     stats: [

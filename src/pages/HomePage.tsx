@@ -57,9 +57,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               <span className="text-amber-400">{content.hero.titleHighlight}</span>
             </h1>
 
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed max-w-2xl">
-              {content.hero.description}
-            </p>
+            <div className="space-y-2 max-w-3xl">
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+                {content.hero.description}
+              </p>
+              {content.hero.footnote && (
+                <p className="text-xs text-slate-400/90 leading-relaxed italic border-l-2 border-amber-500/40 pl-3 pt-0.5">
+                  {content.hero.footnote}
+                </p>
+              )}
+            </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-3">
               <a

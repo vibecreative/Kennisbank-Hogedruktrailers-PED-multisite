@@ -29,6 +29,7 @@ export interface HeroConfig {
   title: string;
   titleHighlight: string;
   description: string;
+  footnote?: string;
   ctaCalculator: string;
   ctaWizard: string;
   stats: Array<{

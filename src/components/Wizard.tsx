@@ -102,22 +102,16 @@ export const Wizard: React.FC<WizardProps> = ({ onNavigate, standalone = false }
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-xs text-slate-300 hidden sm:inline">
-            {currentStep < 4 
-              ? t({
-                  nl: `Stap ${currentStep} van 3`,
-                  fr: `Étape ${currentStep} sur 3`,
-                  de: `Schritt ${currentStep} von 3`,
-                  en: `Step ${currentStep} of 3`,
-                })
-              : t({
-                  nl: 'Adviesrapport gereed',
-                  fr: 'Rapport de conformité prêt',
-                  de: 'Prüfbericht fertiggestellt',
-                  en: 'Compliance report ready',
-                })
-            }
-          </span>
+          {currentStep < 4 && (
+            <span className="text-xs text-slate-300 hidden sm:inline">
+              {t({
+                nl: `Stap ${currentStep} van 3`,
+                fr: `Étape ${currentStep} sur 3`,
+                de: `Schritt ${currentStep} von 3`,
+                en: `Step ${currentStep} of 3`,
+              })}
+            </span>
+          )}
           {currentStep > 1 && (
             <button
               onClick={handleReset}
@@ -660,20 +654,6 @@ export const Wizard: React.FC<WizardProps> = ({ onNavigate, standalone = false }
                       })}
                     </span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    onClick={handlePrint}
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white border border-emerald-300 text-emerald-900 hover:bg-emerald-100/50 rounded-lg text-xs font-semibold transition-colors"
-                  >
-                    <Printer className="w-3.5 h-3.5" />
-                    <span>
-                      {t({
-                        nl: 'Print adviesrapport',
-                        fr: 'Imprimer le rapport de conformité',
-                        de: 'Prüfbericht drucken / speichern',
-                        en: 'Print / Save PDF Report',
-                      })}
-                    </span>
                   </button>
                 </div>
               </div>

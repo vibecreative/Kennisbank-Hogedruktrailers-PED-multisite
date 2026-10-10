@@ -83,7 +83,8 @@ export const beneluxContentDe: SiteContent = {
     badge: 'Gesetzliche Vorschriften für Hochdrucktrailer: LU (ITM) • BE (Codex) • NL (WBDA) • DGRL 2014/68/EU',
     title: 'Hochdrucktrailer & Dampfeinheiten,',
     titleHighlight: 'Was Sie beim Kauf Wissen Müssen',
-    description: 'Beim Kauf von professionellen Heißwasser- und Dampf-Hochdrucktrailern liegt der Fokus meist auf Arbeitsdruck und Reinigungsleistung. Was Sie jedoch auch wissen müssen: Die wiederkehrende Prüfung einer DGRL Kategorie IV Anlage ist gesetzlich vorgeschrieben. Entdecken Sie die rechtlichen Vorschriften, die 2-Liter-Grenze und die realen Betriebskosten.',
+    description: 'Verfügt der Hochdrucktrailer über ein Brenner-/Wärmetauschervolumen von mehr als 2 Litern bei > 110 °C? Dann gilt dieser gesetzlich als DGRL Kategorie IV Dampfanlage: Eine Abnahmeprüfung vor Inbetriebnahme (KvI) durch eine zugelassene Prüfstelle (TÜV, Dekra, Kiwa, Vinçotte) sowie wiederkehrende (2-jährliche*) Prüfungen sind Pflicht. Bleibt das Volumen unter 2 Litern (SEP / Gute Ingenieurpraxis), ist der Hochdrucktrailer vollständig von diesen Prüfpflichten befreit.',
+    footnote: '* Diese Prüffrist kann je nach Land variieren (in den Niederlanden gelten 24 Monate nach WBDA 2016, während in Belgien nach dem Codex regulär eine jährliche Prüfung vorgeschrieben ist, sofern nicht anders genehmigt).',
     ctaCalculator: 'TCO & Prüfkosten Berechnen',
     ctaWizard: 'Hochdrucktrailer Prüfen',
     stats: [
