@@ -156,10 +156,10 @@ export const Wizard: React.FC<WizardProps> = ({ onNavigate, standalone = false }
               </h3>
               <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">
                 {t({
-                  nl: 'Volgens de PED-richtlijn 2014/68/EU (Tabel 5, stoom- en oververhitwatertoestellen) treedt het zware stoomketelregime in werking zodra de maximale druk en temperatuur een gecombineerde risicodrempel overschrijden (> 31,25 bar én > 110 °C).',
-                  fr: 'Selon la Directive DESP 2014/68/UE (Annexe II Tableau 5, générateurs de vapeur et eau surchauffée), le régime sévère des chaudières s’applique dès que la pression et la température dépassent 31,25 bar et 110 °C.',
-                  de: 'Gemäß der europäischen Druckgeräterichtlinie 2014/68/EU (Tabelle 5, Dampf- und Heißwassererzeuger) greift das strenge Dampfkesselregime, sobald Druck und Temperatur 31,25 bar und 110 °C übersteigen.',
-                  en: 'Under European Directive 2014/68/EU (Annex II Table 5 for steam and superheated water generators), the stringent boiler regime applies once pressure and temperature exceed 31.25 bar and 110 °C.',
+                  nl: 'Volgens de PED-richtlijn 2014/68/EU (Tabel 5, stoom- en oververhitwatertoestellen) treedt het zware stoomketelregime in werking zodra de maximale druk en temperatuur een gecombineerde risicodrempel overschrijden (> 32 bar én > 110 °C).',
+                  fr: 'Selon la Directive DESP 2014/68/UE (Annexe II Tableau 5, générateurs de vapeur et eau surchauffée), le régime sévère des chaudières s’applique dès que la pression et la température dépassent 32 bar et 110 °C.',
+                  de: 'Gemäß der europäischen Druckgeräterichtlinie 2014/68/EU (Tabelle 5, Dampf- und Heißwassererzeuger) greift das strenge Dampfkesselregime, sobald Druck und Temperatur 32 bar und 110 °C übersteigen.',
+                  en: 'Under European Directive 2014/68/EU (Annex II Table 5 for steam and superheated water generators), the stringent boiler regime applies once pressure and temperature exceed 32 bar and 110 °C.',
                 })}
               </p>
             </div>
@@ -178,10 +178,10 @@ export const Wizard: React.FC<WizardProps> = ({ onNavigate, standalone = false }
                   </div>
                   <div className="text-base font-bold text-slate-900 mb-1 leading-snug">
                     {t({
-                      nl: 'Werkdruk > 31,25 bar & temperatuur > 110 °C',
-                      fr: 'Pression > 31,25 bar ET Température > 110 °C',
-                      de: 'Druck > 31,25 bar UND Temperatur > 110 °C',
-                      en: 'Pressure > 31.25 bar AND Temperature > 110 °C',
+                      nl: 'Werkdruk > 32 bar & temperatuur > 110 °C',
+                      fr: 'Pression > 32 bar ET Température > 110 °C',
+                      de: 'Druck > 32 bar UND Temperatur > 110 °C',
+                      en: 'Pressure > 32 bar AND Temperature > 110 °C',
                     })}
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
@@ -216,10 +216,10 @@ export const Wizard: React.FC<WizardProps> = ({ onNavigate, standalone = false }
                   </div>
                   <div className="text-base font-bold text-slate-900 mb-1 leading-snug">
                     {t({
-                      nl: 'Werkdruk ≤ 31,25 bar OF temperatuur ≤ 110 °C',
-                      fr: 'Pression ≤ 31,25 bar OU Température ≤ 110 °C',
-                      de: 'Druck ≤ 31,25 bar ODER Temperatur ≤ 110 °C',
-                      en: 'Pressure ≤ 31.25 bar OR Temperature ≤ 110 °C',
+                      nl: 'Werkdruk ≤ 32 bar OF temperatuur ≤ 110 °C',
+                      fr: 'Pression ≤ 32 bar OU Température ≤ 110 °C',
+                      de: 'Druck ≤ 32 bar ODER Temperatur ≤ 110 °C',
+                      en: 'Pressure ≤ 32 bar OR Temperature ≤ 110 °C',
                     })}
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
@@ -254,18 +254,18 @@ export const Wizard: React.FC<WizardProps> = ({ onNavigate, standalone = false }
                   </div>
                   <div className="text-base font-bold text-slate-900 mb-1 leading-snug">
                     {t({
-                      nl: 'Werkdruk ≤ 31,25 bar & temperatuur > 110 °C',
-                      fr: 'Pression ≤ 31,25 bar ET Température > 110 °C',
-                      de: 'Druck ≤ 31,25 bar UND Temperatur > 110 °C',
-                      en: 'Pressure ≤ 31.25 bar AND Temperature > 110 °C',
+                      nl: 'Werkdruk ≤ 32 bar & temperatuur > 110 °C',
+                      fr: 'Pression ≤ 32 bar ET Température > 110 °C',
+                      de: 'Druck ≤ 32 bar UND Temperatur > 110 °C',
+                      en: 'Pressure ≤ 32 bar AND Temperature > 110 °C',
                     })}
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     {t({
-                      nl: 'Lagedruk stoomgeneratoren of hogedruktrailers met werkdruk ≤ 31,25 bar.',
-                      fr: 'Générateurs vapeur atmosphériques ou appareils thermiques restant sous 31,25 bar.',
-                      de: 'Drucklose Dampferzeuger oder Heißwasseranlagen unterhalb von 31,25 bar.',
-                      en: 'Atmospheric or low-pressure thermal weed control units below 31.25 bar threshold.',
+                      nl: 'Lagedruk stoomgeneratoren of hogedruktrailers met werkdruk ≤ 32 bar.',
+                      fr: 'Générateurs vapeur atmosphériques ou appareils thermiques restant sous 32 bar.',
+                      de: 'Drucklose Dampferzeuger oder Heißwasseranlagen unterhalb von 32 bar.',
+                      en: 'Atmospheric or low-pressure thermal weed control units below 32 bar threshold.',
                     })}
                   </p>
                 </div>
@@ -872,10 +872,10 @@ export const Wizard: React.FC<WizardProps> = ({ onNavigate, standalone = false }
                 <div className="bg-white rounded-lg p-5 border border-sky-200 shadow-xs space-y-3">
                   <p className="text-sm text-slate-700 leading-relaxed font-medium">
                     {t({
-                      nl: 'Omdat de werkdruk lager is dan 31,25 bar of de temperatuur onder 110 °C blijft, valt de machine buiten het zware stoomketelregime van Tabel 5. Er geldt geen verplichte KvI.',
-                      fr: 'La pression de service restant ≤ 31,25 bar ou la température ≤ 110 °C, l’appareil n’est pas qualifié de générateur de vapeur haute température au sens du Tableau 5. L’entretien régulier des équipements de travail s’applique.',
-                      de: 'Weil der Druck ≤ 31,25 bar oder die Temperatur ≤ 110 °C beträgt, fällt das Gerät nicht unter das strenge Dampfkesselregime der Tabelle 5. Standardmäßige Arbeitsschutzwartung genügt.',
-                      en: 'Because working pressure is ≤ 31.25 bar or operating temperature is ≤ 110 °C, the unit is not classified as a high-hazard steam boiler under Annex II Table 5. Standard equipment safety maintenance applies.',
+                      nl: 'Omdat de werkdruk lager is dan 32 bar of de temperatuur onder 110 °C blijft, valt de machine buiten het zware stoomketelregime van Tabel 5. Er geldt geen verplichte KvI.',
+                      fr: 'La pression de service restant ≤ 32 bar ou la température ≤ 110 °C, l’appareil n’est pas qualifié de générateur de vapeur haute température au sens du Tableau 5. L’entretien régulier des équipements de travail s’applique.',
+                      de: 'Weil der Druck ≤ 32 bar oder die Temperatur ≤ 110 °C beträgt, fällt das Gerät nicht unter das strenge Dampfkesselregime der Tabelle 5. Standardmäßige Arbeitsschutzwartung genügt.',
+                      en: 'Because working pressure is ≤ 32 bar or operating temperature is ≤ 110 °C, the unit is not classified as a high-hazard steam boiler under Annex II Table 5. Standard equipment safety maintenance applies.',
                     })}
                   </p>
                 </div>

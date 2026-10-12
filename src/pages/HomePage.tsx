@@ -52,17 +52,19 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               <span className="lg:whitespace-nowrap">{content.hero.badge}</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold font-serif tracking-tight text-white leading-tight text-balance max-w-3xl">
-              {content.hero.title}{' '}
-              <span className="text-amber-400">{content.hero.titleHighlight}</span>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold font-serif tracking-tight text-white leading-tight max-w-4xl">
+              <span className="block">{content.hero.title}</span>
+              <span className="block text-amber-400 mt-1 sm:mt-2">
+                {content.hero.titleHighlight}
+              </span>
             </h1>
 
-            <div className="space-y-2 max-w-3xl">
+            <div className="space-y-3 max-w-3xl">
               <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
                 {content.hero.description}
               </p>
               {content.hero.footnote && (
-                <p className="text-xs text-slate-400/90 leading-relaxed italic border-l-2 border-amber-500/40 pl-3 pt-0.5">
+                <p className="text-xs text-slate-400/90 leading-relaxed italic pt-1">
                   {content.hero.footnoteLink ? (
                     (() => {
                       const text = content.hero.footnote;
@@ -95,23 +97,23 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-3">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 pt-3">
               <a
                 href="#keurings-check"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-slate-950 bg-amber-500 hover:bg-amber-400 rounded-lg transition-colors shadow-sm"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-slate-950 bg-amber-500 hover:bg-amber-400 rounded-lg transition-colors shadow-sm whitespace-nowrap"
               >
                 <span>{content.hero.ctaWizard}</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
               <button
                 onClick={() => onNavigate('tco-calculator')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors whitespace-nowrap"
               >
                 <span>{content.hero.ctaCalculator}</span>
               </button>
               <a
                 href="#faq"
-                className="inline-flex items-center justify-center gap-1.5 px-4 py-3.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-3.5 text-sm font-medium text-slate-300 hover:text-white transition-colors whitespace-nowrap"
               >
                 <HelpCircle className="w-4 h-4 text-amber-400" />
                 <span>{txt.hero.faqBtn}</span>

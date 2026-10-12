@@ -48,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Zone 2: Spacious text navigation links */}
-          <nav className="hidden lg:flex items-center space-x-2 xl:space-x-5 text-[13px] xl:text-sm font-medium">
+          <nav className="hidden lg:flex items-center space-x-1.5 xl:space-x-5 text-[13px] xl:text-sm font-medium">
             {navItems.map((item) => {
               const isActive = currentPage === item.id;
               return (
@@ -101,7 +101,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={onOpenWizard}
               className="px-3 xl:px-4 py-2 text-xs font-semibold text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors whitespace-nowrap shadow-xs flex items-center gap-1.5"
             >
-              <span>{content.hero.ctaWizard}</span>
+              <span className="hidden xl:inline">{content.hero.ctaWizard}</span>
+              <span className="xl:hidden">{target === 'europe' ? 'Trailer Check' : 'Keurings-Check'}</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             </button>
           </div>
