@@ -8,6 +8,7 @@ async function prerender() {
 
   const rootDir = process.cwd();
   const distDir = path.resolve(rootDir, 'dist');
+  const publicDir = path.resolve(rootDir, 'public');
   const templatePath = path.resolve(distDir, 'index.html');
 
   if (!fs.existsSync(templatePath)) {
@@ -222,44 +223,29 @@ async function prerender() {
       console.log(`  🔄 Created alias redirect: ${altItem.slug} -> ${destinationUrl}`);
     }
 
-    // Generate sitemap.xml dynamically for this target with multi-regional hreflang annotations
-    const alternateContentForSitemap = target === 'europe' ? beneluxContent : europeContent;
+    // Generate standard sitemap.xml strictly following Google Search Console specifications (identical structure to vibecreative.nl reference)
     const today = new Date().toISOString().split('T')[0];
-    const euBaseUrl = process.env.VITE_EU_SITE_URL || 'https://www.highpressuresteaminspection.eu';
-    const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+    const sitemapXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${content.navItems
   .map((item: { id: string; slug: string }) => {
     const loc = `${baseUrl}${item.slug === '/' ? '/' : item.slug}`;
-    const altItem = alternateContentForSitemap.navItems.find((i: { id: string }) => i.id === item.id);
-    const nlUrl = target === 'benelux' ? loc : `${beneluxContent.meta.baseUrl}${altItem?.slug === '/' ? '/' : (altItem?.slug || '')}`;
-    const enUrl = target === 'europe' ? loc : `${euBaseUrl}${altItem?.slug === '/' ? '/' : (altItem?.slug || '')}`;
     const priority = item.slug === '/' ? '1.0' : item.id === 'wbda-2016' || item.id === 'two-liter-grens' || item.id === 'tco-calculator' || item.id === 'keuringsverplichtingen' ? '0.9' : '0.8';
-    const changefreq = item.slug === '/' || item.id === 'faq' ? 'weekly' : 'monthly';
-    const defaultUrl = target === 'europe' ? enUrl : nlUrl;
-    
-    // Query param syntax for multilingual Benelux alternates
-    const frUrl = target === 'benelux' ? (item.slug === '/' ? `${baseUrl}/?lang=fr` : `${loc}?lang=fr`) : nlUrl;
-    const deUrl = target === 'benelux' ? (item.slug === '/' ? `${baseUrl}/?lang=de` : `${loc}?lang=de`) : nlUrl;
+    const changefreq = item.slug === '/' ? 'weekly' : 'monthly';
 
-    return `  <url>
-    <loc>${loc}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
-    <xhtml:link rel="alternate" hreflang="nl" href="${nlUrl}" />
-    <xhtml:link rel="alternate" hreflang="fr" href="${frUrl}" />
-    <xhtml:link rel="alternate" hreflang="de" href="${deUrl}" />
-    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${defaultUrl}" />
-  </url>`;
+    return `    <url>
+        <loc>${loc}</loc>
+        <priority>${priority}</priority>
+        <changefreq>${changefreq}</changefreq>
+        <lastmod>${today}</lastmod>
+    </url>`;
   })
   .join('\n')}
 </urlset>
 `;
     fs.writeFileSync(path.resolve(distDir, 'sitemap.xml'), sitemapXml, 'utf-8');
-    console.log(`  🗺️  Generated sitemap.xml with hreflang alternates for ${baseUrl}`);
+    fs.writeFileSync(path.resolve(publicDir, 'sitemap.xml'), sitemapXml, 'utf-8');
+    console.log(`  🗺️  Generated clean Google Search Console compliant sitemap.xml for ${baseUrl}`);
 
     // Generate robots.txt dynamically for this target
     const robotsTxt = `User-agent: *
